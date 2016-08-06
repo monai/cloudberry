@@ -1,11 +1,33 @@
 {
   "name": "cloudberry",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "HTTP/HTTPS middleware driven proxy server",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "author": "monai",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {},
+  "files": [
+    "lib",
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monai/cloudberry.git"
+  },
+  "keywords": [
+    "http",
+    "https",
+    "proxy",
+    "middleware",
+    "tls",
+    "decrypt"
+  ],
+  "bugs": {
+    "url": "https://github.com/monai/cloudberry/issues"
+  },
+  "homepage": "https://github.com/monai/cloudberry#readme"
 }
