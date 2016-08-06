@@ -1,4 +1,4 @@
-# proxy
+# cloudberry
 
 [![NPM Version](http://img.shields.io/npm/v/cloudberry.svg)](https://www.npmjs.org/package/cloudberry)
 
