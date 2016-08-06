@@ -1,9 +1,4 @@
-# proxy
-
-## Usage
-
-```js
-const proxy = require('proxy');
+const proxy = require('./index');
 const connect = require('connect');
 const morgan = require('morgan');
 
@@ -15,8 +10,3 @@ app.use((req, res, next) => {
 });
 
 proxy(app).listen(8000);
-```
-
-## License
-
-ISC
