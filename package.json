@@ -1,6 +1,6 @@
 {
   "name": "cloudberry",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "HTTP/HTTPS middleware driven proxy server",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,10 @@
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {},
+  "files": [
+    "lib",
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/monai/cloudberry.git"
