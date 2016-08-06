@@ -1,5 +1,5 @@
 {
-  "name": "proxy",
+  "name": "cloudberry",
   "version": "0.0.0",
   "description": "HTTP/HTTPS middleware driven proxy server",
   "main": "index.js",
