@@ -11,6 +11,14 @@ const proxy = require('cloudberry');
 const connect = require('connect');
 const morgan = require('morgan');
 
+const key = `-----BEGIN RSA PRIVATE KEY-----
+<...>
+-----END RSA PRIVATE KEY-----`;
+
+const cert = `-----BEGIN CERTIFICATE-----
+<...>
+-----END CERTIFICATE-----`;
+
 const app = connect();
 app.use(morgan('dev'));
 app.use((req, res, next) => {
