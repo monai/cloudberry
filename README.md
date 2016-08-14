@@ -18,7 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
-proxy(app).listen(8000);
+proxy({ key, cert }, app).listen(8000);
 ```
 
 ## License
