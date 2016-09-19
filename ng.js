@@ -67,39 +67,22 @@ const httpsProxy = https.createServer({ cert, key }, (req, res) => {
 
 const server = net.createServer(function (client) {
   const CONNECT = Buffer('CONNECT');
-  const CRLFCRLF = Buffer('\r\n\r\n');
   const connectHeader = [
     'HTTP/1.1 200 Connection Established',
     `proxy-agent: cloudberry/0.0.1`,
     '', ''
   ].join('\r\n');
 
-  client.on('readable', onReadable);
+  client.once('readable', onReadable);
 
   function onReadable() {
     var buff = client.read(7);
     if (buff && buff.equals(CONNECT)) {
-      let headers = Buffer(2048);
-      let offset = 0;
-      let index = -1;
-
-      while (Buffer.isBuffer(buff)) {
-        buff.copy(headers, offset);
-        offset += buff.length;
-        index = headers.indexOf(CRLFCRLF);
-
-        if (~index) {
-          client.write(connectHeader);
-          client.removeListener('readable', onReadable);
-          httpsProxy.emit('connection', client);
-          break;
-        } else {
-          buff = client.read();
-        }
-      }
+      while (client.read());
+      client.write(connectHeader);
+      httpsProxy.emit('connection', client);
     } else {
       client.unshift(buff);
-      client.removeListener('readable', onReadable);
       httpProxy.emit('connection', client);
     }
   }
