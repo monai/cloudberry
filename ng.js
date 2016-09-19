@@ -3,6 +3,7 @@
 const net = require('net');
 const http = require('http');
 const https = require('https');
+const url = require('url');
 
 const cert =
 `-----BEGIN CERTIFICATE-----
@@ -56,6 +57,7 @@ uWEO2cTuRRqVeyOuQc7/VKY=
 -----END PRIVATE KEY-----`;
 
 const httpProxy = http.createServer((req, res) => {
+  req.url = url.parse(req.url).path;
   console.log(req.url);
   res.end();
 });
