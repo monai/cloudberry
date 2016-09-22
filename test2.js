@@ -1,6 +1,6 @@
 'use strict';
 
-const url = require('url');
+// const url = require('url');
 const http = require('http');
 const https = require('https');
 
@@ -56,6 +56,8 @@ zvJxPDlvGWgO+sf/Cd3tt7iZZCs4nZgAMPEEp4/gz4WW16QroLC37n+M3G9+saeX
 ydQY8o5uR/G4AJBX3wUXFbXYMhY2Tj17+NK5qy3KBMm5L9IDrUyW
 -----END RSA PRIVATE KEY-----`;
 
+const ca = proxy.ca({ cert, key });
+
 const httpProxy = http.createServer((req, res) => {
   // req.url = url.parse(req.url).path;
   console.log(req.url);
@@ -63,8 +65,11 @@ const httpProxy = http.createServer((req, res) => {
   proxy.request(req, res);
 });
 
-const httpsProxy = https.createServer({ cert, key }, (req, res) => {
-  console.log(req.url);
+const httpsProxy = https.createServer({
+  cert, key,
+  SNICallback: ca.SNICallback()
+}, (req, res) => {
+  console.log('~', req.url);
   // res.end();
   proxy.request(req, res);
 });
