@@ -66,7 +66,6 @@ const httpProxy = http.createServer((req, res) => {
 });
 
 const httpsProxy = https.createServer({
-  cert, key,
   SNICallback: ca.SNICallback()
 }, (req, res) => {
   console.log('~', req.url);
