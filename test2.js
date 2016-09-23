@@ -70,7 +70,7 @@ const httpsProxy = https.createServer({
 }, (req, res) => {
   console.log('~', req.url);
   // res.end();
-  proxy.request(req, res);
+  proxy.request(req, res).on('error', console.error);
 });
 
 const server = proxy({
