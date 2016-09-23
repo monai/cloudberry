@@ -4,7 +4,7 @@
 // const http = require('http');
 // const https = require('https');
 
-const proxy = require('./lib/ng');
+const proxy = require('.');
 
 const cert =
 `-----BEGIN CERTIFICATE-----
