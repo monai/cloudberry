@@ -8,25 +8,27 @@ Cloudberry is HTTP/HTTPS middleware driven proxy server.
 
 ```js
 const proxy = require('cloudberry');
-const connect = require('connect');
-const morgan = require('morgan');
 
-const key = `-----BEGIN RSA PRIVATE KEY-----
+const key =
+`-----BEGIN RSA PRIVATE KEY-----
 <...>
 -----END RSA PRIVATE KEY-----`;
 
-const cert = `-----BEGIN CERTIFICATE-----
+const cert =
+`-----BEGIN CERTIFICATE-----
 <...>
 -----END CERTIFICATE-----`;
 
-const app = connect();
-app.use(morgan('dev'));
-app.use((req, res, next) => {
-  console.log(res.statusCode, res.statusMessage);
-  next();
+const ca = proxy.ca({ key, cert });
+
+const server = proxy.createServer({
+  SNICallback: ca.SNICallback()
+}, (req, res) => {
+  console.log(req.url);
+  proxy.request(req, res).on('error', console.error);
 });
 
-proxy({ key, cert }, app).listen(8000);
+proxy(server).listen(8000);
 ```
 
 ## License

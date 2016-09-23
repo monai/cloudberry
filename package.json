@@ -4,6 +4,7 @@
   "description": "HTTP/HTTPS middleware driven proxy server",
   "main": "index.js",
   "scripts": {
+    "work": "nodemon -w '**/*.js' test2.js",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "author": "monai",
@@ -11,7 +12,9 @@
   "dependencies": {
     "node-forge": "^0.6.42"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.10.2"
+  },
   "files": [
     "lib",
     "index.js"
