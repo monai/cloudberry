@@ -61,7 +61,6 @@ int32_t addIdentityPkcs12(char *identity, long length, char **outError) {
   OSStatus status = CF_addIdentityPkcs12(identityRef);
   CFRelease(identityRef);
   if (status != errSecSuccess) {
-    printf("%d\n", status);
     *outError = unwrapError(status);
     return (int32_t)status;
   }
