@@ -1,5 +1,4 @@
 #import <CoreFoundation/CoreFoundation.h>
-#import <Foundation/Foundation.h>
 #import <Security/Security.h>
 
 #include "keychain.h"
@@ -36,8 +35,6 @@ OSStatus CF_getIdentityPkcs12(CFStringRef label, CFDataRef *outIdentity) {
   const void *keys[] = { kSecClass, kSecAttrLabel, kSecAttrCanSign, kSecReturnRef };
   const void *values[] = { kSecClassIdentity, label, kCFBooleanTrue, kCFBooleanTrue };
   query = CFDictionaryCreate(NULL, keys, values, 3, NULL, NULL);
-
-  NSLog(@"%@", query);
 
   status = SecItemCopyMatching(query, &identityRef);
   CFRelease(query);
@@ -90,14 +87,11 @@ OSStatus CF_addIdentityPkcs12(CFDataRef identityData) {
   params.keyAttributes = NULL;
   params.passphrase = CFSTR("");
 
-  // CFArrayRef items = NULL;
-  status = SecItemImport(identityData, NULL, &format, &type, 0, &params, keychain, /*&items*/NULL);
+  status = SecItemImport(identityData, NULL, &format, &type, 0, &params, keychain, NULL);
   CFRelease(keychain);
   if (status != errSecSuccess) {
-    // if (items) CFRelease(items);
     return status;
   }
-  // CFRelease(items);
 
   return errSecSuccess;
 }
