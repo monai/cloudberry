@@ -31,7 +31,7 @@ cert.setExtensions([
     name: 'subjectKeyIdentifier'
   }
 ]);
-cert.sign(keys.privateKey);
+cert.sign(keys.privateKey, forge.md.sha256.create());
 
 const prvKeyPEM = pki.privateKeyToPem(keys.privateKey);
 const certPEM = pki.certificateToPem(cert);
