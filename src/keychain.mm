@@ -82,6 +82,7 @@ OSStatus CF_addIdentityPkcs12(CFDataRef identityData) {
   SecExternalItemType type = kSecItemTypeUnknown;
 
   SecItemImportExportKeyParameters params;
+  memset(&params, 0, sizeof(SecKeyImportExportParameters));
   params.keyUsage = NULL;
   params.keyAttributes = NULL;
   params.passphrase = CFSTR("");
