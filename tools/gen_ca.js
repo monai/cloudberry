@@ -3,6 +3,7 @@
 const forge = require('node-forge');
 const minimist = require('minimist');
 
+const util = require('../lib/util');
 const keychain = require('../lib/keychain');
 const pkg = require('../package.json');
 
@@ -62,17 +63,13 @@ function saveToKeychain(identity) {
         console.error(`Certificate '${LABEL}' already exists in default keychain.`);
         process.exit(1);
       } else {
+        identity = util.identityToPkcs12(identity, PASSPHRASE, {
+          algorithm: '3des',
+          friendlyName: LABEL
+        });
+
         try {
-          let p12Asn1 = forge.pkcs12.toPkcs12Asn1(identity.key, identity.cert, PASSPHRASE, {
-            algorithm: '3des',
-            friendlyName: LABEL
-          });
-
-          let p12Der = forge.asn1.toDer(p12Asn1).getBytes();
-          let p12b64 = forge.util.encode64(p12Der);
-          let p12Buffer = new Buffer(p12b64, 'base64');
-
-          keychain.addIdentity(p12Buffer, PASSPHRASE, error => {
+          keychain.addIdentity(identity, PASSPHRASE, error => {
             if (error) {
               console.error(error);
             } else {
