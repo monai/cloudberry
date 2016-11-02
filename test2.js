@@ -56,23 +56,26 @@ zvJxPDlvGWgO+sf/Cd3tt7iZZCs4nZgAMPEEp4/gz4WW16QroLC37n+M3G9+saeX
 ydQY8o5uR/G4AJBX3wUXFbXYMhY2Tj17+NK5qy3KBMm5L9IDrUyW
 -----END RSA PRIVATE KEY-----`;
 
-const ca = proxy.ca({ cert, key });
+proxy.keychain.getIdentity((error, identity) => {
+  const ca = proxy.ca(identity);
 
-const server = proxy.createServer({
-  SNICallback: ca.SNICallback()
-}, (req, res) => {
-  console.log('~', req.url);
-  // res.end();
-  proxy.request(req, res).on('error', console.error);
+  const server = proxy.createServer({
+    SNICallback: ca.SNICallback()
+  }, (req, res) => {
+    console.log('~', req.url);
+    // res.end();
+    proxy.request(req, res).on('error', console.error);
+  });
+
+  // console.log(server);
+
+  server.on('request', (req, res) => {
+    console.log('req', req.url);
+  });
+
+  proxy(server).listen(8000);
 });
 
-// console.log(server);
-
-server.on('request', (req, res) => {
-  console.log('req', req.url);
-});
-
-proxy(server).listen(8000);
 
 // const httpProxy = http.createServer((req, res) => {
 //   // req.url = url.parse(req.url).path;
