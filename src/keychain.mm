@@ -32,7 +32,7 @@ OSStatus CF_getIdentityPkcs12(CFStringRef label, CFDataRef *outIdentity) {
   CFDictionaryRef query;
   CFTypeRef identityRef;
 
-  const void *keys[] = { kSecClass, kSecAttrLabel, kSecAttrCanSign, kSecReturnRef };
+  const void *keys[] = { kSecClass, kSecMatchSubjectWholeString, kSecAttrCanSign, kSecReturnRef };
   const void *values[] = { kSecClassIdentity, label, kCFBooleanTrue, kCFBooleanTrue };
   query = CFDictionaryCreate(NULL, keys, values, 3, NULL, NULL);
 
