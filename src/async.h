@@ -26,8 +26,8 @@ class GetIdentityWorker : public AsyncWorker {
 
 class AddIdentityWorker : public AsyncWorker {
  public:
-  AddIdentityWorker(Callback *callback, char *data, long length)
-    : AsyncWorker(callback), data(data), length(length), error(NULL) {}
+  AddIdentityWorker(Callback *callback, char *data, long length, char *passphrase)
+    : AsyncWorker(callback), data(data), length(length), passphrase(passphrase), error(NULL) {}
   ~AddIdentityWorker() {}
   void Execute();
   void HandleOKCallback ();
@@ -35,6 +35,7 @@ class AddIdentityWorker : public AsyncWorker {
  private:
   char *data;
   long length;
+  char *passphrase;
   char *error;
 };
 

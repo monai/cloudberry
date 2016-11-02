@@ -53,7 +53,7 @@ void AddIdentityWorker::HandleOKCallback () {
 }
 
 void AddIdentityWorker::Execute() {
-  addIdentityPkcs12(data, length, &error);
+  addIdentityPkcs12(data, length, passphrase, &error);
 }
 
 NAN_METHOD(GetIdentity) {
@@ -67,7 +67,8 @@ NAN_METHOD(AddIdentity) {
   Local<Object> identity = info[0]->ToObject();
   char *data = node::Buffer::Data(identity);
   long length = node::Buffer::Length(identity);
-  Callback *callback = new Callback(info[1].As<Function>());
+  Utf8String *passphrase = new Utf8String(info[1]);
+  Callback *callback = new Callback(info[2].As<Function>());
 
-  AsyncQueueWorker(new AddIdentityWorker(callback, data, length));
+  AsyncQueueWorker(new AddIdentityWorker(callback, data, length, **passphrase));
 }

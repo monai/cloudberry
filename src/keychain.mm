@@ -56,9 +56,10 @@ OSStatus CF_getIdentityPkcs12(CFStringRef label, CFDataRef *outIdentity) {
   return (int32_t)errSecSuccess;
 }
 
-int32_t addIdentityPkcs12(char *identity, long length, char **outError) {
+int32_t addIdentityPkcs12(char *identity, long length, char *passphrase, char **outError) {
   CFDataRef identityRef = CFDataCreate(NULL, (const UInt8 *)identity, length);
-  OSStatus status = CF_addIdentityPkcs12(identityRef);
+  CFStringRef passphraseRef = CFStringCreateWithCString(NULL, passphrase, kCFStringEncodingUTF8);
+  OSStatus status = CF_addIdentityPkcs12(identityRef, passphraseRef);
   CFRelease(identityRef);
   if (status != errSecSuccess) {
     *outError = unwrapError(status);
@@ -68,7 +69,7 @@ int32_t addIdentityPkcs12(char *identity, long length, char **outError) {
   return errSecSuccess;
 }
 
-OSStatus CF_addIdentityPkcs12(CFDataRef identityData) {
+OSStatus CF_addIdentityPkcs12(CFDataRef identityData, CFStringRef passphrase) {
   OSStatus status;
   SecKeychainRef keychain;
 
@@ -79,13 +80,13 @@ OSStatus CF_addIdentityPkcs12(CFDataRef identityData) {
   }
 
   SecExternalFormat format = kSecFormatPKCS12;
-  SecExternalItemType type = kSecItemTypeUnknown;
+  SecExternalItemType type = kSecItemTypeAggregate;
 
   SecItemImportExportKeyParameters params;
   memset(&params, 0, sizeof(SecKeyImportExportParameters));
   params.keyUsage = NULL;
   params.keyAttributes = NULL;
-  params.passphrase = CFSTR("");
+  params.passphrase = passphrase;
 
   status = SecItemImport(identityData, NULL, &format, &type, 0, &params, keychain, NULL);
   CFRelease(keychain);
