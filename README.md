@@ -19,16 +19,21 @@ const cert =
 <...>
 -----END CERTIFICATE-----`;
 
-const ca = proxy.ca({ key, cert });
+proxy.keychain.getDefaultIdentity((error, identity) => {
+  if (error) {
+    identity = { key, cert }; // if not on macOS
+  }
 
-const server = proxy.createServer({
-  SNICallback: ca.SNICallback()
-}, (req, res) => {
-  console.log(req.url);
-  proxy.request(req, res).on('error', console.error);
+  const ca = proxy.ca({ key, cert });
+  const server = proxy.createServer({
+    SNICallback: ca.SNICallback()
+  }, (req, res) => {
+    console.log('>', req.url);
+    proxy.request(req, res).on('error', console.error);
+  });
+
+  proxy(server).listen(8000);
 });
-
-proxy(server).listen(8000);
 ```
 
 ## License
