@@ -4,6 +4,20 @@
 
 Cloudberry is HTTP/HTTPS middleware driven proxy server.
 
+## Generate CA signing identity
+
+Generate signing identity:
+
+```shell
+cloudberry
+```
+
+Generate signing identity and save to macOS default keychain:
+
+```shell
+cloudberry -K
+```
+
 ## Usage
 
 ```js
@@ -24,7 +38,7 @@ proxy.keychain.getDefaultIdentity((error, identity) => {
     identity = { key, cert }; // if not on macOS
   }
 
-  const ca = proxy.ca({ key, cert });
+  const ca = proxy.ca(identity);
   const server = proxy.createServer({
     SNICallback: ca.SNICallback()
   }, (req, res) => {
