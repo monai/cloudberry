@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bindings": "^1.2.1",
+    "dezalgo": "^1.0.3",
     "minimist": "^1.2.0",
     "nan": "^2.4.0",
     "node-forge": "^0.6.42"
