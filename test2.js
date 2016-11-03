@@ -12,20 +12,17 @@ proxy.keychain.getDefaultIdentity((error, identity) => {
   }
 
   const ca = proxy.ca(identity);
-
   const server = proxy.createServer({
     SNICallback: ca.SNICallback()
   }, (req, res) => {
-    console.log('~', req.url);
+    console.log('>', req.url);
     // res.end();
     proxy.request(req, res).on('error', console.error);
   });
 
-  // console.log(server);
-
-  server.on('request', (req, res) => {
-    console.log('req', req.url);
-  });
+  // server.on('request', (req, res) => {
+  //   console.log('req', req.url);
+  // });
 
   proxy(server).listen(8000);
 });
