@@ -3,6 +3,7 @@
   "version": "0.0.4",
   "description": "HTTP/HTTPS middleware driven proxy server",
   "main": "index.js",
+  "bin": "bin/cloudberry",
   "scripts": {
     "work": "nodemon -w '**/*.js' test2.js",
     "test": "echo \"Error: no test specified\" && exit 0"
