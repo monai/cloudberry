@@ -4,12 +4,12 @@
 #include "keychain.h"
 #include "reallocarray.h"
 
-int32_t getIdentityPkcs12(char *label, char **outIdentity, long **outLength, char **outError) {
-  CFStringRef labelRef = CFStringCreateWithCString(NULL, label, kCFStringEncodingUTF8);
+int32_t getIdentityPkcs12(char *subject, char **outIdentity, long **outLength, char **outError) {
+  CFStringRef subjectRef = CFStringCreateWithCString(NULL, subject, kCFStringEncodingUTF8);
   CFDataRef identityDataRef = NULL;
 
-  OSStatus status = CF_getIdentityPkcs12(labelRef, &identityDataRef);
-  CFRelease(labelRef);
+  OSStatus status = CF_getIdentityPkcs12(subjectRef, &identityDataRef);
+  CFRelease(subjectRef);
   if (status != errSecSuccess) {
     *outError = unwrapError(status);
     return (int32_t)status;
@@ -26,14 +26,14 @@ int32_t getIdentityPkcs12(char *label, char **outIdentity, long **outLength, cha
   return (int32_t)errSecSuccess;
 }
 
-OSStatus CF_getIdentityPkcs12(CFStringRef label, CFDataRef *outIdentity) {
+OSStatus CF_getIdentityPkcs12(CFStringRef subject, CFDataRef *outIdentity) {
   OSStatus status;
 
   CFDictionaryRef query;
   CFTypeRef identityRef;
 
   const void *keys[] = { kSecClass, kSecMatchSubjectWholeString, kSecAttrCanSign, kSecReturnRef };
-  const void *values[] = { kSecClassIdentity, label, kCFBooleanTrue, kCFBooleanTrue };
+  const void *values[] = { kSecClassIdentity, subject, kCFBooleanTrue, kCFBooleanTrue };
   query = CFDictionaryCreate(NULL, keys, values, 3, NULL, NULL);
 
   status = SecItemCopyMatching(query, &identityRef);

@@ -17,7 +17,7 @@ using Nan::Undefined;
 using Nan::Utf8String;
 
 void GetIdentityWorker::Execute() {
-  getIdentityPkcs12(label, &data, &length, &error);
+  getIdentityPkcs12(subject, &data, &length, &error);
 }
 
 void GetIdentityWorker::HandleOKCallback () {
@@ -57,10 +57,10 @@ void AddIdentityWorker::Execute() {
 }
 
 NAN_METHOD(GetIdentity) {
-  Utf8String *label = new Utf8String(info[0]);
+  Utf8String *subject = new Utf8String(info[0]);
   Callback *callback = new Callback(info[1].As<Function>());
 
-  AsyncQueueWorker(new GetIdentityWorker(callback, **label));
+  AsyncQueueWorker(new GetIdentityWorker(callback, **subject));
 }
 
 NAN_METHOD(AddIdentity) {

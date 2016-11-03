@@ -11,14 +11,14 @@ NAN_METHOD(AddIdentity);
 
 class GetIdentityWorker : public AsyncWorker {
  public:
-  GetIdentityWorker(Callback *callback, char *label)
-    : AsyncWorker(callback), label(label), error(NULL) {}
+  GetIdentityWorker(Callback *callback, char *subject)
+    : AsyncWorker(callback), subject(subject), error(NULL) {}
   ~GetIdentityWorker() {}
   void Execute();
   void HandleOKCallback ();
 
  private:
-  char *label;
+  char *subject;
   char *data;
   long *length;
   char *error;
