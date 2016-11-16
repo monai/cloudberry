@@ -45,7 +45,6 @@ OSStatus CF_getIdentityPkcs12(CFStringRef subject, CFDataRef *outIdentity) {
   SecItemImportExportKeyParameters params;
   params.keyUsage = NULL;
   params.keyAttributes = NULL;
-  params.passphrase = CFSTR("");
 
   status = SecItemExport(identityRef, kSecFormatPKCS12, 0, &params, outIdentity);
   CFRelease(identityRef);
