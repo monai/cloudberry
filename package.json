@@ -1,6 +1,6 @@
 {
   "name": "cloudberry",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "HTTP/HTTPS middleware driven proxy server",
   "main": "index.js",
   "bin": "bin/cloudberry",
@@ -9,14 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "dependencies": {
-    "bindings": "^1.2.1",
+    "bindings": "^1.3.0",
     "dezalgo": "^1.0.3",
     "minimist": "^1.2.0",
-    "nan": "^2.4.0",
-    "node-forge": "^0.6.42"
+    "nan": "^2.7.0",
+    "node-forge": "^0.7.1"
   },
   "devDependencies": {
-    "nodemon": "^1.10.2"
+    "nodemon": "^1.12.1"
   },
   "files": [
     "lib",

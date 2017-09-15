@@ -43,7 +43,7 @@ proxy.keychain.getDefaultIdentity((error, identity) => {
     SNICallback: ca.SNICallback()
   }, (req, res) => {
     console.log('>', req.url);
-    proxy.request(req, res).on('error', console.error);
+    proxy.request(ca)(req, res).on('error', console.error);
   });
 
   proxy(server).listen(8000);
