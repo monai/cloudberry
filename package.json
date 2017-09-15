@@ -19,6 +19,7 @@
     "nodemon": "^1.12.1"
   },
   "files": [
+    "bin",
     "lib",
     "index.js"
   ],
