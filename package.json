@@ -21,7 +21,8 @@
   "files": [
     "bin",
     "lib",
-    "index.js"
+    "index.js",
+    "binding.gyp"
   ],
   "repository": {
     "type": "git",
