@@ -3,7 +3,6 @@
   "version": "0.0.8",
   "description": "HTTP/HTTPS middleware driven proxy server",
   "main": "index.js",
-  "bin": "bin/cloudberry",
   "scripts": {
     "work": "nodemon -w '**/*.js' test2.js",
     "test": "echo \"Error: no test specified\" && exit 0"
@@ -29,8 +28,7 @@
     "bin",
     "lib",
     "src",
-    "index.js",
-    "binding.gyp"
+    "index.js"
   ],
   "repository": {
     "type": "git",
