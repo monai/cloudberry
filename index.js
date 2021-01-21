@@ -1,10 +1,10 @@
-const createCA = require('./lib/ca');
+const CertificateAuthority = require('./lib/CertificateAuthority');
 const createServer = require('./lib/server');
 const proxy = require('./lib/proxy');
 const request = require('./lib/request');
 
 module.exports = {
-  createCA,
+  CertificateAuthority,
   createServer,
   proxy,
   request,
