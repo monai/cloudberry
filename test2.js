@@ -1,28 +1,40 @@
+/* eslint-disable no-console */
+
 'use strict';
 
-const proxy = require('.');
+const fs = require('fs/promises');
 
-proxy.keychain.getDefaultIdentity((error, identity) => {
-  if (error) {
-    return console.error(error);
+const {
+  createCA, createServer, proxy, request,
+} = require('.');
+
+main();
+
+async function main() {
+  try {
+    const key = await fs.readFile('./tls/rootCAKey.pem');
+    const cert = await fs.readFile('./tls/rootCACert.pem');
+
+    launch(key, cert);
+  } catch (ex) {
+    console.error(ex);
   }
+}
 
-  const ca = proxy.ca(identity);
-  const server = proxy.createServer({
-    SNICallback: ca.SNICallback()
+function launch(key, cert) {
+  const ca = createCA({ key, cert });
+  const server = createServer({
+    SNICallback: ca.SNICallback(),
   }, (req, res) => {
     console.log(req.headers.host, '>', req.url);
 
-    if (req.headers.host == 'accounts.google.com') {
-
-      // console.log(req.headers);
-      // console.log(req.rawHeaders);
-
-    }
-
-    proxy.request(req, res).on('error', console.error);
-
+    const res2 = request(ca)(req, res);
+    console.log(res2);
+    res2.on('error', console.error);
   });
 
-  proxy(server).listen(8000);
-});
+  proxy(server)
+    .listen(8000, () => {
+      console.log('Listening on 0.0.0.0:8000');
+    });
+}
